@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  site:
+    container_name: fracz.pl
+    image: php:7.1-apache
+    restart: unless-stopped
+    networks: [proxy]
+#    ports:
+#      - "1234:80"
+    environment:
+      VIRTUAL_HOST: fracz.pl,www.fracz.pl
+      LETSENCRYPT_HOST: fracz.pl,www.fracz.pl
+      LETSENCRYPT_EMAIL: fraczwojciech@gmail.com
+    expose: [80]
+    volumes:
+      - ./files:/var/www/html:z
+
+networks:
+  proxy:
+    external:
+      name: webproxy

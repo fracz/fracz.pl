@@ -3,9 +3,9 @@ version: '3'
 services:
   site:
     container_name: fracz-pl
-    image: php:7.1-apache
+    build: docker
     restart: unless-stopped
-    networks: [proxy]
+    networks: [default, proxy]
 #    ports:
 #      - "1234:80"
     environment:
@@ -14,9 +14,24 @@ services:
       LETSENCRYPT_EMAIL: fraczwojciech@gmail.com
     expose: [80]
     volumes:
-      - ./files:/var/www/html:z
+      - ./yourls:/var/www/html:z
+
+  site-db:
+    container_name: fracz-pl-db
+    restart: unless-stopped
+    image: mysql
+    networks: [default, dbnetwork]
+    environment:
+      MYSQL_ROOT_PASSWORD: X2UVxX9dTJ6
+      MYSQL_DATABASE: site
+      MYSQL_USER: fracz
+      MYSQL_PASSWORD: X2UVxX9dTJ6
+    volumes:
+       - ./var/mysql:/var/lib/mysql:z
 
 networks:
   proxy:
     external:
       name: webproxy
+  dbnetwork:
+    external: true

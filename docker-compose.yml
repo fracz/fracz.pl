@@ -1,37 +1,26 @@
 version: '3'
 
 services:
-  site:
-    container_name: fracz-pl
-    build: docker
-    restart: unless-stopped
-    networks: [default, proxy]
-#    ports:
-#      - "1234:80"
-    environment:
-      VIRTUAL_HOST: fracz.pl,www.fracz.pl,fracz.com,www.fracz.com
-      LETSENCRYPT_HOST: fracz.pl,www.fracz.pl,fracz.com,www.fracz.com
-      LETSENCRYPT_EMAIL: fraczwojciech@gmail.com
-    expose: [80]
-    volumes:
-      - ./yourls:/var/www/html:z
-
-  site-db:
-    container_name: fracz-pl-db
-    restart: unless-stopped
-    image: mysql
+  yourls:
+    build: .
+    container_name: 'fracz-pl'
     networks: [default, dbnetwork]
     environment:
-      MYSQL_ROOT_PASSWORD: X2UVxX9dTJ6
-      MYSQL_DATABASE: site
-      MYSQL_USER: fracz
-      MYSQL_PASSWORD: X2UVxX9dTJ6
-    volumes:
-       - ./var/mysql:/var/lib/mysql:z
+      - YOURLS_SITE=https://fracz.com
+      - YOURLS_USER=${YOURLS_USER}
+      - YOURLS_PASS=${YOURLS_PASS}
+      - YOURLS_DB_PASS=${YOURLS_DB_PASS}
+      - YOURLS_DB_HOST=mysqldb
+      - YOURLS_DB_USER=yourls
+      - YOURLS_DB_NAME=yourls
+      - VIRTUAL_HOST=fracz.pl,www.fracz.pl,fracz.com,www.fracz.com
+      - LETSENCRYPT_HOST=fracz.pl,www.fracz.pl,fracz.com,www.fracz.com
+      - LETSENCRYPT_EMAIL=fraczwojciech@gmail.com
 
 networks:
-  proxy:
+  default:
     external:
       name: webproxy
   dbnetwork:
-    external: true
+    external:
+      name: dbnetwork

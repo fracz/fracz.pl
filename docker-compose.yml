@@ -16,6 +16,8 @@ services:
       - VIRTUAL_HOST=fracz.pl,www.fracz.pl,fracz.com,www.fracz.com
       - LETSENCRYPT_HOST=fracz.pl,www.fracz.pl,fracz.com,www.fracz.com
       - LETSENCRYPT_EMAIL=fraczwojciech@gmail.com
+    volumes:
+      - ./uploads:/var/www/html/uploads:z
 
 networks:
   default:

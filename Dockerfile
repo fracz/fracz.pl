@@ -1,4 +1,4 @@
-FROM yourls:1.8.2-apache
+FROM yourls:1.9.2-apache
 
 ADD https://github.com/fredl99/YOURLS-Upload-and-Shorten/archive/master.tar.gz /opt/Uplad-and-Shorten.tar.gz
 

@@ -4,6 +4,7 @@ services:
   yourls:
     build: .
     container_name: 'fracz-pl'
+    restart: always
     networks: [default, dbnetwork]
     environment:
       - YOURLS_SITE=https://fracz.com

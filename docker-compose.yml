@@ -5,7 +5,6 @@ services:
     build: .
     container_name: 'fracz-pl'
     restart: always
-    networks: [default, dbnetwork]
     environment:
       - YOURLS_SITE=https://fracz.com
       - YOURLS_USER=${YOURLS_USER}
@@ -24,6 +23,3 @@ networks:
   default:
     external:
       name: webproxy
-  dbnetwork:
-    external:
-      name: dbnetwork

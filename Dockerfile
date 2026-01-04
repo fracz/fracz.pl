@@ -1,4 +1,4 @@
-FROM yourls:1.9.2-apache
+FROM yourls:1.10.2-apache
 
 ADD https://github.com/fredl99/YOURLS-Upload-and-Shorten/archive/master.tar.gz /opt/Uplad-and-Shorten.tar.gz
 
@@ -11,7 +11,7 @@ RUN for i in $(ls /opt/*.tar.gz); do                                          \
         -C user/plugins/${plugin_name}                                      ; \
     done
 
-RUN echo "define('SHARE_URL','http://fracz.com/uploads/');" >> /usr/src/yourls/user/config-docker.php \
+RUN echo "define('SHARE_URL','https://fracz.com/uploads/');" >> /usr/src/yourls/user/config-docker.php \
   && echo "define('SHARE_DIR','/var/www/html/uploads/');" >> /usr/src/yourls/user/config-docker.php
 
 COPY static/ /var/www/html

@@ -13,6 +13,7 @@ services:
       - YOURLS_DB_NAME=${YOURLS_DB_NAME:-yourls}
     volumes:
       - ./uploads:/var/www/html/uploads:z
+      - ../temp:/var/www/temp:z
 
 networks:
   default:

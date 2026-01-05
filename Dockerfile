@@ -15,3 +15,16 @@ RUN echo "define('SHARE_URL','https://fracz.com/uploads/');" >> /usr/src/yourls/
   && echo "define('SHARE_DIR','/var/www/html/uploads/');" >> /usr/src/yourls/user/config-docker.php
 
 COPY static/ /var/www/html
+
+COPY apache/temp.fracz.com.conf /etc/apache2/sites-available/temp.fracz.com.conf
+
+RUN { \
+		echo 'opcache.memory_consumption=128'; \
+		echo 'opcache.interned_strings_buffer=8'; \
+		echo 'opcache.max_accelerated_files=4000'; \
+		echo 'opcache.revalidate_freq=2'; \
+		echo 'opcache.fast_shutdown=1'; \
+		echo 'opcache.enable_cli=1'; \
+	} > /usr/local/etc/php/conf.d/opcache-recommended.ini \
+    && a2enmod rewrite expires proxy proxy_http headers deflate ssl cgi alias env \
+    && a2ensite temp.fracz.com.conf

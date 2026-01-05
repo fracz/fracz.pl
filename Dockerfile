@@ -17,6 +17,7 @@ RUN echo "define('SHARE_URL','https://fracz.com/uploads/');" >> /usr/src/yourls/
 COPY static/ /var/www/html
 
 COPY apache/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+COPY apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY apache/temp.fracz.com.conf /etc/apache2/sites-available/temp.fracz.com.conf
 
 RUN { \

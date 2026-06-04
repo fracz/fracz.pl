@@ -1,0 +1,12 @@
+services:
+  mariadb-backup:
+    build: .
+    volumes:
+      - ./config.yml:/app/config.yml:ro
+      - /var/tmp/mariadb-backups:/tmp/mariadb-backups
+      - ./rclone.conf:/app/rclone.conf:ro
+    environment:
+      TZ: Europe/Warsaw
+      RCLONE_CONFIG: /app/rclone.conf
+    command: ["/app/config.yml"]
+    restart: "no"

@@ -4,9 +4,9 @@ services:
     volumes:
       - ./config.yml:/app/config.yml:ro
       - /var/tmp/mariadb-backups:/tmp/mariadb-backups
-      - ./rclone.conf:/app/rclone.conf:ro
+      - ./rclone:/config/rclone
     environment:
       TZ: Europe/Warsaw
-      RCLONE_CONFIG: /app/rclone.conf
+      RCLONE_CONFIG: /config/rclone/rclone.conf
     command: ["/app/config.yml"]
     restart: "no"

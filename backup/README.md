@@ -11,7 +11,7 @@ cp config.yml.example config.yml
 Na hoscie:
 
 ```bash
-rclone config --config ./rclone.conf
+rclone config --config ./rclone/rclone.conf
 chmod 600 ./rclone.conf
 ```
 

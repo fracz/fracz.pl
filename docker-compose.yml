@@ -15,6 +15,27 @@ services:
       - ./uploads:/var/www/html/uploads:z
       - ../temp:/var/www/temp:z
 
+  gitea:
+    image: docker.gitea.com/gitea:1.26.2
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=mysql
+      - GITEA__database__HOST=${GITEA_DB_HOST}
+      - GITEA__database__NAME=${GITEA_DB_NAME}
+      - GITEA__database__USER=${GITEA_DB_USER}
+      - GITEA__database__PASSWD=${GITEA_DB_PASSWORD}
+    restart: always
+    networks:
+      - webproxy
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "${GITEA_PORT}:22"
+
 networks:
   default:
     external:

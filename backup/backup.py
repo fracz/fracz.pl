@@ -35,6 +35,7 @@ def main():
         "--triggers",
         "--events",
         "--hex-blob",
+        "--skip-add-drop-table",
     ])
 
     local_tmp.mkdir(parents=True, exist_ok=True)
@@ -57,7 +58,7 @@ def main():
                 "--port", str(server.get("port", 3306)),
                 "--user", str(server["user"]),
                 *dump_extra_args,
-                "--databases", database,
+                database,
             ]
 
             with tempfile.NamedTemporaryFile(delete=False) as raw_dump:

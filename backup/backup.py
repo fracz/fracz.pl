@@ -16,6 +16,16 @@ def run(cmd, **kwargs):
     subprocess.run(cmd, check=True, **kwargs)
 
 
+def parse_database_entry(entry):
+    if isinstance(entry, str):
+        return entry, []
+
+    if isinstance(entry, dict):
+        return entry["name"], entry.get("skip_tables", [])
+
+    raise ValueError(f"Unsupported database entry: {entry!r}")
+
+
 def main():
     cfg_path = sys.argv[1] if len(sys.argv) > 1 else "/app/config.yml"
 
@@ -44,7 +54,8 @@ def main():
     for server in cfg["servers"]:
         server_name = server["name"]
 
-        for database in server["databases"]:
+        for database_entry in server["databases"]:
+            database, skip_tables = parse_database_entry(database_entry)
             env = os.environ.copy()
             env["MYSQL_PWD"] = str(server["password"])
 
@@ -58,6 +69,7 @@ def main():
                 "--port", str(server.get("port", 3306)),
                 "--user", str(server["user"]),
                 *dump_extra_args,
+                *[f"--ignore-table={database}.{table}" for table in skip_tables],
                 database,
             ]
 

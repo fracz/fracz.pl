@@ -20,7 +20,10 @@ servers:
     password: "CHANGE_ME"
     databases:
       - "app_prod"
-      - "app_logs"
+      - name: "app_logs"
+        skip_tables:
+          - "request_log"
+          - "session_cache"
 
   - name: "prod-2"
     host: "10.0.0.12"
